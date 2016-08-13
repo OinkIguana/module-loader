@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Tests</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../node_modules/mocha/mocha.css">
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script>mocha.setup('bdd')</script>
+  </head>
+  <body>
+    <div id="mocha"></div>
+    
+    <script type="text/module" name="inline-module">
+    import './test-module-1';
+    export * from './test-module-2';
+    </script>
+
+    <script type="text/module" src="./test-module-0.js"></script>
+    <script src="../index.min.js"></script>
+    <script src="./index.js"></script>
+    <script>
+    window.moduleLoader.then(() => {
+      mocha.run();
+    });
+    </script>
+  </body>
+</html>

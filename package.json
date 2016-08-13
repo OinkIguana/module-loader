@@ -1,0 +1,23 @@
+{
+  "name": "module-loader",
+  "version": "1.0.0",
+  "description": "Load and run ES6 modules client side",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "module",
+    "load"
+  ],
+  "author": "Cameron Eldridge",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OinkIguana/module-loader.git"
+  },
+  "devDependencies": {
+    "babel-loader": "^6.2.4",
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2",
+    "webpack": "^1.13.1"
+  }
+}
