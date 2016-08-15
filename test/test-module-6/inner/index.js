@@ -1,2 +1,2 @@
 'use strict';
-import '/test/test-module-8';
+import {a, b, c as d, e, f} from '/test/test-module-8';

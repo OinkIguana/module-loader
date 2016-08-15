@@ -4,10 +4,12 @@ import path from 'path';
 
 import xhr from './xhr';
 import resolveModules from './resolve-modules';
-import modules from './modules';
+import Modules from './modules';
+import functionalize from './functionalize';
+import run from './run';
 
 window.moduleLoader = Promise.all(Array.prototype.map.call(
-  document.querySelectorAll('script[type="text/module"]'),
+  document.querySelectorAll('script[type="module"]'),
   (element) => generate(function*() {
     const src = element.getAttribute('src');
     let code;
@@ -22,10 +24,8 @@ window.moduleLoader = Promise.all(Array.prototype.map.call(
     } else {
       code = element.innerHTML;
     }
-    return resolveModules(code, './');
-  }))
-);
-
-window.moduleLoader.then(() => {
-  console.log(modules.all());
-})
+    const modules = new Modules(element.id);
+    const root = yield resolveModules(code, './', modules);
+    modules.root = root;
+    return modules;
+  }).then(functionalize).then(run)));

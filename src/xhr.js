@@ -10,6 +10,7 @@ export default (url) => {
       }
     })
     xhr.open('GET', url, true);
+    xhr.responseType = "text";
     xhr.send();
   });
 };

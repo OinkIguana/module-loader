@@ -1,14 +1,22 @@
-const modules = {};
-function add(id, content) {
-  modules[id] = content;
-}
+'use strict';
+import symbolic from 'symbolic';
 
-function get(id, content) {
-  return modules[id] || null;
-}
+const [ALL, ROOT] = symbolic;
 
-function all() {
-  return modules;
-}
+export default class Modules {
+  constructor(name) {
+    this.name = name;
+    this[ALL] = {};
+    this[ROOT] = "";
+  }
+  add(id, content) {
+    this.all[id] = content;
+  }
+  get(id) {
+    return this.all[id] || null;
+  }
 
-export default { add: add, get: get, all: all }
+  set root(content) { this[ROOT] = content;}
+  get all() { return this[ALL]; }
+  get root() { return this[ROOT]; }
+}
