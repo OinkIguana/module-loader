@@ -21,7 +21,7 @@ window.moduleLoader = Promise.all(Array.prototype.map.call(
         console.error(e);
         return;
       }
-    } else {
+    } else if(element.hasAttribute('entry')) {
       code = element.innerHTML;
     }
     const modules = new Modules(element.id);

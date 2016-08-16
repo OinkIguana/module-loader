@@ -36,10 +36,12 @@ export default function run(modules) {
       }
     } else {
       for(let key of Object.keys(imports)) {
-        Object.defineProperty(exports, key, {
-          enumerable: true,
-          get: ((key) => () => imports[key]) (key)
-        });
+        if(key !== 'default') {
+          Object.defineProperty(exports, key, {
+            enumerable: true,
+            get: ((key) => () => imports[key]) (key)
+          });
+        }
       }
     }
   }

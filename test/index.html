@@ -10,19 +10,37 @@
   </head>
   <body>
     <div id="mocha"></div>
-
-    <script type="module" id="inline-module">
-    import './test-module-1';
-    import * as t from './test-module-2';
-    console.log(t);
-    export default 135;
+    <script type="module" id="inline-entry" entry>
+    'use strict';
+    import testA from './test-a';
+    import F from './test-f';
+    describe('inline entry', function() {
+      it('should retrieve all dependencies correctly', function() {
+        testA().should.equal('test-a');
+        (new F()).should.be.an.instanceof(F);
+      });
+    });
+    export const name = 'inline-entry';
+    export default name;
     </script>
+    <script src="./index.js" type="module" id="external-entry"></script>
 
-    <script type="module" src="./test-module-0.js"></script>
     <script src="../index.min.js"></script>
-    <script src="./index.js"></script>
     <script>
+    describe('window.moduleLoader', function() {
+      it('should be a promise that resolves when modules load', function() {
+        window.moduleLoader.should.be.a('Promise');
+      });
+      it('should include exports from each entry point', function() {
+        window.moduleLoader['inline-entry'].default.should.equal('inline-entry');
+        window.moduleLoader['inline-entry'].name.should.equal('inline-entry');
+
+        window.moduleLoader['external-entry'].default.should.equal('external-entry');
+        window.moduleLoader['external-entry'].name.should.equal('external-entry');
+      });
+    });
     window.moduleLoader.then(() => {
+      chai.should();
       mocha.run();
     });
     </script>

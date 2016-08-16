@@ -3,7 +3,7 @@ import spliceString from 'splice-string';
 import {IMPORT_FN_NAME, EXPORT_FN_NAME, EXPORT_OBJ_NAME, INOUT_FN_NAME} from './const';
 
 const EXPORTS = [
-  /export\s+\{(.*)\}/g,
+  /export\s+\{(.*)\}($|;)/g,
   /export (var|let|const|function|class)\s+([\$A-Za-z_][\$A-Za-z_0-9]*)/g,
   /export default/g,
   /export\s+\*\s+from\s+(?:'(.*)'|"(.*)")/g,
@@ -61,7 +61,7 @@ export default function transformExports(code) {
           file = matches[2] || matches[3];
           end = regex.lastIndex;
           start = end - matches[0].length;
-          code = spliceString(code, start, matches[0].length, `${INOUT_FN_NAME}('${file}', ${identifiers})`);
+          code = spliceString(code, start, matches[0].length, `${INOUT_FN_NAME}('${file}', {${identifiers}})`);
           break;
       }
     }
